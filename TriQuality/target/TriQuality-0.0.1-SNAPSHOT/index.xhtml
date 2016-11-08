@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:aj="http://www.animatejsf.org/animate" >
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9"/>
+<h:head>
+<meta charset="UTF-8"/>
+<title>Run Scenarios</title>
+</h:head>
+<h:body>
+
+
+<h:form id="form">
+<br></br><br></br>
+   <center>
+		<h:outputText value="IE: " />
+        <p:selectBooleanCheckbox value="#{automationView.selectedIE}" />
+        <p:spacer width="100" height="10" />
+        <h:outputText value="Chrome: " />
+        <p:selectBooleanCheckbox value="#{automationView.selectedChrome}" />
+        <p:spacer width="100" height="10" />
+        <h:outputText value="Firefox: " />
+        <p:selectBooleanCheckbox value="#{automationView.selectedFireFox}" />
+        
+        
+</center>
+<br></br><br></br><br></br>
+    <p:dataTable id="checkboxDT" var="scenario" value="#{automationView.allScenarios}" selection="#{automationView.selectedScenarios}" rowKey="#{scenario.id}" style="margin-bottom:0">
+        <f:facet name="header">
+            SENARYO LİSTESİ
+        </f:facet>
+        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+        <p:column headerText="ID">
+            <h:outputText value="#{scenario.id}" />
+        </p:column>
+        <p:column headerText="SENARYO ADI">
+            <h:outputText value="#{scenario.name}" />
+        </p:column>
+        <p:column headerText="AÇIKLAMA">
+            <h:outputText value="#{scenario.description}" />
+        </p:column>
+        <p:column headerText="SAHI SCRIPT">
+            <h:outputText value="#{scenario.scriptFile}" />
+        </p:column>
+        <f:facet name="footer">
+            <p:commandButton process="checkboxDT"  update=":form:multiCarDetail"  icon="ui-icon-play" value="Çalıştır" action="#{automationView.invokeAutomation}" oncomplete="PF('multiCarDialog').show()" />
+        </f:facet>
+    </p:dataTable>
+    
+    <p:dialog header="Seçilen Senaryolar" widgetVar="multiCarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="200">
+        <p:outputPanel id="multiCarDetail" style="text-align:center;">
+            <ui:repeat value="#{automationView.selectedScenarios}" var="scenario">
+                <h:outputText value="#{scenario.id} - #{scenario.name}" style="display:block"/>
+            </ui:repeat>
+        </p:outputPanel>
+    </p:dialog>
+</h:form>
+</h:body>
+</html>
