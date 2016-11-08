@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.Map;
 import java.util.Map.Entry;
 
+
 public class DB_Operations {
 
 	private static Statement stmt = null;
@@ -18,6 +19,16 @@ public class DB_Operations {
 	static String password = "admin";
 
 	private static Connection conn = null;
+	
+	
+
+	public static Connection getConn() {
+		return conn;
+	}
+
+	public static void setConn(Connection conn) {
+		DB_Operations.conn = conn;
+	}
 
 	public static Connection createConnection() {
 
@@ -56,7 +67,7 @@ public class DB_Operations {
 
 	}
 
-	public static int getId(Connection conn, String tableName) {
+	public static int getId(String tableName) {
 
 		int newId = 0;
 
@@ -75,7 +86,7 @@ public class DB_Operations {
 		return newId;
 	}
 
-	public static int getIdByColumn(Connection conn, String tableName, String columnName) {
+	public static int getIdByColumn(String tableName, String columnName) {
 
 		int newId = 0;
 
@@ -94,7 +105,7 @@ public class DB_Operations {
 		return newId;
 	}
 
-	public static void delete(Connection conn, String tableName, int id) {
+	public static void delete(String tableName, int id) {
 		try {
 			stmt = conn.createStatement();
 			stmt.execute("delete from " + tableName + " where ID=" + id + "");
@@ -104,7 +115,7 @@ public class DB_Operations {
 		}
 	}
 
-	public static void update(Connection conn, String tableName, int id, Map<String, String> updateMap) {
+	public static void update(String tableName, int id, Map<String, String> updateMap) {
 		try {
 
 			stmt = conn.createStatement();

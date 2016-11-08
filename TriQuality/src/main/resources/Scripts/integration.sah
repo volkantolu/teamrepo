@@ -1,0 +1,17 @@
+// Test Manager can pass in data to this script via "initJS" parameter.
+// initJS will be "eval"ed before a script starts
+// Pass String "$user='test';$pwd='secret';" as parameter "initJS"
+// Or pass a HashMap of variable name and value as called in above Java code
+_setValue(_textbox("user"), $user);
+_setValue(_password("password"), $pwd);
+_click(_submit("Login"));
+_setValue(_textbox("q"), "2");
+_setValue(_textbox("q[1]"), "1");
+_setValue(_textbox("q[2]"), "1");
+_click(_button("Add"));
+_click(_cell("Rs.200[1]"));
+_assertExists(_textbox("total"));
+_assert(_isVisible(_textbox("total")));
+_assertEqual("1150", _textbox("total").value);
+_click(_button("Logout"));
+

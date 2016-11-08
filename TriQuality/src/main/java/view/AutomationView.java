@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import bean.Scenario;
+import db.DB_Operations;
 import service.ScenarioService;
 
 @ManagedBean
@@ -29,11 +30,13 @@ public class AutomationView {
 	@PostConstruct
 	public void init() {
 		//System.out.println("Ýçeri girdi");
-		allScenarios=scenarioService.createScenarios(10);
+		DB_Operations.createConnection();
+		scenarioService.initService();
+		allScenarios=scenarioService.listScenario();
 		selectedChrome = false;
 		selectedIE = false;
 		selectedFireFox = false;
-		selectedBrowsers=new ArrayList<>();
+		selectedBrowsers=new ArrayList<String>();
 	}
 
 	

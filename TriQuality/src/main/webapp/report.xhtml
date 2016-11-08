@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:aj="http://www.animatejsf.org/animate">
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
+<h:head>
+	<meta charset="UTF-8" />
+	<title>Report</title>
+</h:head>
+<h:body>
+
+
+	<h:form id="form">
+		<br></br>
+		<br></br>
+		<center>
+
+
+
+			<!-- 		Rapor Gösterimi -->
+			<p:dataTable id="tbl" var="execution"
+				value="#{reportView.executionList}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+				paginator="true" rows="10" style="margin-bottom:20px">
+
+				<f:facet name="{Exporters}">
+					<h:commandLink>
+						<h:outputLabel  value="EXCEL" />
+						<p:dataExporter type="xls" target="tbl" fileName="rapor" />
+					</h:commandLink>
+					<p:spacer width="10" height="10" />
+					<h:commandLink>
+						<h:outputLabel  value="PDF" />
+						<p:dataExporter type="pdf" target="tbl" fileName="rapor" />
+					</h:commandLink>
+				</f:facet>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="TEST NO" />
+					</f:facet>
+					<h:outputText value="#{execution.sessionId}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="SENARYO NO" />
+					</f:facet>
+					<h:outputText value="#{execution.scenarioId}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="STATÜ" />
+					</f:facet>
+					<h:outputText value="#{execution.status}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="BROWSER" />
+					</f:facet>
+					<h:outputText value="#{execution.browserType}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="BAŞLANGIÇ ZAMANI" />
+					</f:facet>
+					<h:outputText value="#{execution.executionTime}" />
+				</p:column>
+			</p:dataTable>
+
+		</center>
+	</h:form>
+</h:body>
+</html>

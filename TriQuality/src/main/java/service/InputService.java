@@ -6,9 +6,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -23,15 +21,19 @@ public class InputService {
 //
 	private static String tableName = "TEST.INPUTS";
 	// jdbc Connection
-	private static Connection conn = null;
+	private  Connection conn = null;
 	private static Statement stmt = null;
+	
+	public void initService(){
+		this.conn=DB_Operations.getConn();
+	}
 
-	public static List<Input> listScenarioInput(int scenarioId) {
+	public List<Input> listScenarioInput(int scenarioId) {
 
 		List<Input> inputList = new ArrayList<Input>();
 
 		try {
-			stmt = conn.createStatement();
+			stmt = this.conn.createStatement();
 			ResultSet results = stmt.executeQuery("select * from " + tableName + " where SCENARIO_ID = " + scenarioId);
 			ResultSetMetaData rsmd = results.getMetaData();
 			int numberCols = rsmd.getColumnCount();
@@ -53,14 +55,12 @@ public class InputService {
 		return inputList;
 	}
 
-	public static void insertInput(Input input) {
+	public  void insertInput(Input input) {
 
-		DB_Operations dbOps = new DB_Operations();
-
-		int inputId = dbOps.getId(conn, tableName);
+		int inputId = DB_Operations.getId(tableName);
 
 		try {
-			stmt = conn.createStatement();
+			stmt = this.conn.createStatement();
 			stmt.execute("insert into " + tableName + " values (" + inputId + "," + input.getScenarioId() + ",'"
 					+ input.getDescription() + "','" + input.getInputName() + "','" + input.getInputValue() + "')");
 			stmt.close();
@@ -69,12 +69,5 @@ public class InputService {
 		}
 	}
 
-	public static Connection getConn() {
-		return conn;
-	}
-
-	public static void setConn(Connection conn) {
-		InputService.conn = conn;
-	}
 
 }

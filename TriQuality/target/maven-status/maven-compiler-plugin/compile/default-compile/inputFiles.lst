@@ -1,4 +1,10 @@
-D:\gitHub\TriQuality\src\main\java\service\ScenarioService.java
-D:\gitHub\TriQuality\src\main\java\bean\Input.java
-D:\gitHub\TriQuality\src\main\java\bean\Scenario.java
-D:\gitHub\TriQuality\src\main\java\view\AutomationView.java
+C:\Users\User\workspace\TriQuality\src\main\java\bean\Input.java
+C:\Users\User\workspace\TriQuality\src\main\java\service\ExecutionService.java
+C:\Users\User\workspace\TriQuality\src\main\java\db\DB_Operations.java
+C:\Users\User\workspace\TriQuality\src\main\java\run\Execute.java
+C:\Users\User\workspace\TriQuality\src\main\java\bean\Execution.java
+C:\Users\User\workspace\TriQuality\src\main\java\service\ScenarioService.java
+C:\Users\User\workspace\TriQuality\src\main\java\view\AutomationView.java
+C:\Users\User\workspace\TriQuality\src\main\java\bean\Scenario.java
+C:\Users\User\workspace\TriQuality\src\main\java\service\InputService.java
+C:\Users\User\workspace\TriQuality\src\main\java\view\ReportView.java

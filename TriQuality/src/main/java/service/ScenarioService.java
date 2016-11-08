@@ -6,9 +6,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -23,15 +21,20 @@ public class ScenarioService {
 
 	private static String tableName = "TEST.SCENARIOS";
 	// jdbc Connection
-	private static Connection conn = null;
+	private Connection conn = null;
 	private static Statement stmt = null;
+	
+	
+	public void initService(){
+		this.conn=DB_Operations.getConn();
+	}
 
-	public static List<Scenario> listScenario() {
+	public List<Scenario> listScenario() {
 
 		List<Scenario> list = new ArrayList<Scenario>();
 
 		try {
-			stmt = conn.createStatement();
+			stmt = this.conn.createStatement();
 			ResultSet results = stmt.executeQuery("select * from " + tableName);
 			ResultSetMetaData rsmd = results.getMetaData();
 			int numberCols = rsmd.getColumnCount();
@@ -52,12 +55,12 @@ public class ScenarioService {
 		return list;
 	}
 
-	public static Scenario getScenario(int scenarioId) {
+	public Scenario getScenario(int scenarioId) {
 
 		Scenario scenario = new Scenario();
 
 		try {
-			stmt = conn.createStatement();
+			stmt = this.conn.createStatement();
 			ResultSet results = stmt.executeQuery("select * from " + tableName + " where id = " + scenarioId);
 			ResultSetMetaData rsmd = results.getMetaData();
 			int numberCols = rsmd.getColumnCount();
@@ -76,14 +79,11 @@ public class ScenarioService {
 		return scenario;
 	}
 
-	public static void insertScenario(Scenario scenarioBean) {
-
-		DB_Operations dbOps = new DB_Operations();
-
-		int scenarioId = dbOps.getId(conn, tableName);
+	public void insertScenario(Scenario scenarioBean) {
+		int scenarioId = DB_Operations.getId(tableName);
 
 		try {
-			stmt = conn.createStatement();
+			stmt = this.conn.createStatement();
 
 			stmt.execute("insert into " + tableName + " values (" + scenarioId + ",'" + scenarioBean.getName() + "','"
 					+ scenarioBean.getDescription() + "','" + scenarioBean.getScriptFile() + "')");
@@ -93,12 +93,5 @@ public class ScenarioService {
 		}
 	}
 
-	public static Connection getConn() {
-		return conn;
-	}
-
-	public static void setConn(Connection conn) {
-		ScenarioService.conn = conn;
-	}
 
 }
