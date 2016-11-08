@@ -20,7 +20,7 @@ import db.DB_Operations;
 @ApplicationScoped
 
 public class InputService {
-
+//
 	private static String tableName = "TEST.INPUTS";
 	// jdbc Connection
 	private static Connection conn = null;
