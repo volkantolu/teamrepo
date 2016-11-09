@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.context.RequestContext;
 
 import bean.Scenario;
 import db.DB_Operations;
+import run.ExecutionOperations;
 import service.ScenarioService;
 
 @ManagedBean
@@ -19,13 +24,16 @@ public class AutomationView {
 	 @ManagedProperty("#{scenarioService}")
 	 private ScenarioService scenarioService;
 	
-	
+	 @ManagedProperty("#{executionOperations}")
+	 private ExecutionOperations executionOperations;
+	 
 	private List<Scenario> allScenarios;
     private List<Scenario> selectedScenarios;
     private List<String> selectedBrowsers;
     private boolean selectedChrome;
     private boolean selectedIE;
     private boolean selectedFireFox;
+
 	
 	@PostConstruct
 	public void init() {
@@ -74,14 +82,15 @@ public class AutomationView {
 			if(selectedBrowsers.contains("firefox"))
 			{selectedBrowsers.remove("firefox");}
 		}
-		
-		
-		for (int i = 0; i <selectedBrowsers.size(); i++) {
-			System.out.println(selectedBrowsers.get(i));
+				
+		if(selectedBrowsers.size()!=0 && selectedScenarios.size()!=0 )
+		{
+			 RequestContext.getCurrentInstance().execute("PF('multiCarDialog').show();");
+			 executionOperations.start(selectedScenarios,selectedBrowsers);
 		}
-		
-		for (int i = 0; i <selectedScenarios.size(); i++) {
-			System.out.println(selectedScenarios.get(i).getId());
+		else
+		{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Contact admin."));
 		}
 		
 	}
@@ -156,6 +165,22 @@ public class AutomationView {
 	public void setScenarioService(ScenarioService scenarioService) {
 		this.scenarioService = scenarioService;
 	}
+
+
+
+	public ExecutionOperations getExecutionOperations() {
+		return executionOperations;
+	}
+
+
+
+	public void setExecutionOperations(ExecutionOperations executionOperations) {
+		this.executionOperations = executionOperations;
+	}
+
+
+
+
 	
 	
 

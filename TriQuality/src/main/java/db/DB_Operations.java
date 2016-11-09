@@ -13,7 +13,7 @@ public class DB_Operations {
 
 	private static Statement stmt = null;
 
-	private static String dbURL = "jdbc:derby://192.168.8.103:1527/Automation;create=true";
+	private static String dbURL = "jdbc:derby://192.168.2.148:1527/Automation;create=true";
 
 	static String userName = "admin";
 	static String password = "admin";

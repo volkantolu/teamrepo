@@ -16,7 +16,6 @@ import db.DB_Operations;
 
 @ManagedBean(name = "inputService")
 @ApplicationScoped
-
 public class InputService {
 //
 	private static String tableName = "TEST.INPUTS";
