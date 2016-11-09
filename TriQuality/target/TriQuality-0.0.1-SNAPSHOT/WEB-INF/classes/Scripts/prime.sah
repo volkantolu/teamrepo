@@ -1,0 +1,10 @@
+//$url="http://www.primefaces.org/showcase/"
+//$searchParam= "command"
+//$button= "Execute"
+_navigateTo($url);
+_click(_textbox("menuSearch"));
+_setValue(_textbox("menuSearch"), $searchParam);
+_click(_span("SubMenu-Ajax"));
+_click(_link("• RemoteCommand"));
+_click(_link("• RemoteCommand"));
+_click(_span($button));

@@ -4,7 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:aj="http://www.animatejsf.org/animate">
+	xmlns:aj="http://www.animatejsf.org/animate" >
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
 <h:head>
 	<meta charset="UTF-8" />
@@ -17,7 +17,7 @@
 		<br></br>
 		<br></br>
 		<center>
-		
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 <!-- 		Browser Seçimi -->
 			<h:outputText value="IE: " />
 			<p:selectBooleanCheckbox id="ie" value="#{automationView.selectedIE}">
@@ -65,8 +65,7 @@
 			<f:facet name="footer">
 				<p:commandButton process="checkboxDT" update=":form:multiCarDetail"
 					icon="ui-icon-play" value="Çalıştır"
-					action="#{automationView.invokeAutomation}"
-					oncomplete="PF('multiCarDialog').show()" />
+					action="#{automationView.invokeAutomation}"/>
 			</f:facet>
 		</p:dataTable>
 

@@ -17,7 +17,6 @@ import db.DB_Operations;
 
 @ManagedBean(name = "executionService")
 @ApplicationScoped
-
 public class ExecutionService {
 
 	private static String tableName = "TEST.EXECUTION";

@@ -16,7 +16,6 @@ import db.DB_Operations;
 
 @ManagedBean(name = "scenarioService")
 @ApplicationScoped
-
 public class ScenarioService {
 
 	private static String tableName = "TEST.SCENARIOS";
