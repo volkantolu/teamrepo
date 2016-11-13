@@ -1,0 +1,169 @@
+function getDatesForHotel($startMonth,$endMonth,$year){
+
+var $availableHotelDates=[];
+var $availableWeekDays=[];
+
+//aylarýn kaçar gün olduklarý
+var $startMonthLastDay=getDaysInMonth($startMonth,$year);
+var $endMonthLastDay=getDaysInMonth($endMonth,$year);
+
+//son ay içerisinde maximum 1 hatfa seçebilmek için seçebileceðim son gün
+var $lastWeekStartDate=30-7;
+
+//toplam seçilebilecek hafta sayýsý
+var $weeksize=$startMonthLastDay+$lastWeekStartDate;
+
+_log($startMonthLastDay);
+_log($endMonthLastDay);
+_log($lastWeekStartDate);
+_log($weeksize);
+
+
+if($startMonth.toString().length<2)
+{
+	var $startMonthStr="0"+($startMonth+1).toString();
+	
+}
+else
+{
+	var $startMonthStr=($startMonth+1).toString();
+}
+if($endMonth.toString().length<2)
+{
+	var $endMonthStr="0"+($endMonth+1).toString();
+	
+}
+else
+{
+	var $endMonthStr=($endMonth+1).toString();
+}
+
+//week için diðer aya geçmesi durumunda devreye girecektir
+var $EndMonthCounterForFirtMonth=1;
+var $EndMonthCounterForSecondMonth=1;
+
+for (var $i=1; $i<$weeksize+1; $i++){
+
+
+			//eðer ilk ay içerisinde isek
+			if($i<$startMonthLastDay+1)
+			{
+							
+							if($i.toString().length<2)
+							{
+								var $startDay="0"+$i.toString();
+								
+							}
+							else
+							{
+								var $startDay=$i.toString();
+							}
+							
+								
+							var $startDate=$startMonthStr+"/"+$startDay+"/"+$year;
+							
+							
+							var $endDay=$i+7;
+							
+							if($endDay>$startMonthLastDay)
+							{
+								var $endDay=$EndMonthCounterForFirtMonth;
+								$EndMonthCounterForFirtMonth=$EndMonthCounterForFirtMonth+1;
+								var $endMonthParam=$endMonthStr;
+							}
+							else
+							{
+								var $endMonthParam=$startMonthStr;
+							}
+							
+							
+							
+							if($endDay.toString().length<2)
+							{
+								var $endDayStr="0"+$endDay.toString();
+							}
+							else
+							{
+								var $endDayStr=$endDay.toString();
+							}
+							
+							
+							
+
+							var $endDate=$endMonthParam+"/"+$endDayStr+"/"+$year;
+							
+						
+							
+							
+							$availableWeekDays[$i-1]=[$startDate,$endDate];
+
+			}
+
+			//eðer ikinci ay içerisinde isek
+			else
+			{		
+						
+				
+						if($EndMonthCounterForSecondMonth.toString().length<2)
+							{
+								var $startDay="0"+$EndMonthCounterForSecondMonth.toString();
+							}
+							else
+							{
+								var $startDay=$EndMonthCounterForSecondMonth.toString();
+							}
+							
+								
+							var $startDate=$endMonthStr+"/"+$startDay+"/"+$year;
+							
+							var $endDay=$EndMonthCounterForSecondMonth+7;
+							
+							if($endDay.toString().length<2)
+							{
+								var $endDayStr="0"+$endDay.toString();
+							}
+							else
+							{
+								var $endDayStr=$endDay.toString();
+							}
+							
+							if($endDay>$startMonthLastDay)
+							{
+								var $endDate=$endMonthStr+"/"+$endDayStr+"/"+$year;
+							}
+							else
+							{
+								var $endDate=$endMonthStr+"/"+$endDayStr+"/"+$year;
+							}
+						
+							
+							
+							$availableWeekDays[$i-1]=[$startDate,$endDate];
+							$EndMonthCounterForSecondMonth=$EndMonthCounterForSecondMonth+1;
+				
+			}
+
+}
+
+
+return $availableWeekDays;
+
+
+}
+
+function getDaysInMonth($month,$year) {  
+  // Here January is 1 based  
+  //Day 0 is the last day in the previous month  
+  var $day= new Date($year, $month, 0).getDate();  
+ return $day;
+// Here January is 0 based  
+// return new Date(year, month+1, 0).getDate();  
+}
+
+// 0 dan baþlýyor 5 haziran, 6 temmuz
+var $availableWeekDays=getDatesForHotel(5,6,2017);
+
+for(var $i=0; $i<$availableWeekDays.length; $i++)
+{
+_log($availableWeekDays[$i]);
+}

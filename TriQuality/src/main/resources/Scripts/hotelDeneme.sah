@@ -1,0 +1,65 @@
+function runOtel($downLimit,$upLimit){
+	_navigateTo("https://www.expedia.com");
+_click(_span("icon icon-hotels[1]"));
+_setValue(_textbox("hotel-destination"), "Honolulu, HI (HNL-Honolulu Intl.)");
+
+var $starDate="06/01/2017";
+var $endDate="07/31/2017"
+
+
+_setValue(_textbox("hotel-checkin"),$starDate);
+_setValue(_textbox("hotel-checkin"), $endDate);
+
+
+_setSelected(_select("hotel-1-guests"), "2 adults, 0 children");
+
+_click(_submit("Search"));
+
+var $hotelList;
+
+_set($hotelList,document.getElementsByClassName("hotel listing col organic"));
+
+
+//_alert("volkan");
+
+//_alert(parseInt($hotelSize));
+
+
+
+var $size;
+
+_set($size,document.getElementsByClassName("hotel listing col organic").length);
+
+_log($size+1);
+
+//_log($size);
+
+for(var $i=0; $i < $size; $i++){
+	
+var $valueStr;
+_set($valueStr, _getText(document.getElementsByClassName("actualPrice price show-when-muted fakeLink")[$i]));	
+	
+$valueStr=$valueStr.substring(1,$valueStr.length);
+var $valueInt=parseInt($valueStr)+1;
+
+
+if($downLimit<$valueInt && $upLimit>$valueInt)
+{
+	_alert(true);
+	_alert($valueInt);
+
+var $link;
+_set($link,document.getElementsByClassName("flex-link")[$i]);
+
+_click($link);
+	
+}
+
+
+}
+
+}
+
+runOtel(250,300);
+
+
