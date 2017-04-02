@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration monitorinterval="30" status="all" strict="true">
+
+	<!-- log levels order -->
+	<!-- ALL > DEBUG > INFO > WARN > ERROR > FATAL > OFF -->
+
+	<Properties>
+		<!-- all means don't use log levels -->
+		<Property name="file_all">logs/error/error.log</Property>
+		<!-- debug is called as trace -->
+		<Property name="file_debug">logs/debug/debug.log</Property>
+		<Property name="file_info">logs/info/info.log</Property>
+		<Property name="file_warn">logs/warn/warn.log</Property>
+		<Property name="file_error">logs/error/error.log</Property>
+		<Property name="file_fatal">logs/fatal/fatal.log</Property>
+		<!-- off means no logging -->
+		<Property name="file_off">logs/no_log/no_log.log</Property>
+	</Properties>
+
+	<Appenders>
+
+		<Appender type="File" name="File_DEBUG" fileName="${file_debug}">
+			<Layout type="PatternLayout" pattern="[%-5level] %d %p %C{9.} [%t] %m%n" />
+			<Filters>
+				<ThresholdFilter level="info" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="warn" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="error" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="fatal" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="debug" onMatch="ACCEPT"
+					onMismatch="DENY" />
+			</Filters>
+		</Appender>
+
+		<Appender type="File" name="File_INFO" fileName="${file_info}">
+			<Layout type="PatternLayout" pattern="[%-5level] %d %p %C{9.} [%t] %m%n" />
+			<Filters>
+				<!-- Now deny warn, error and fatal messages -->
+				<ThresholdFilter level="warn" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="error" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="fatal" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+				<!-- This filter accepts info, warn, error, fatal and denies debug/trace -->
+				<ThresholdFilter level="info" onMatch="ACCEPT"
+					onMismatch="DENY" />
+			</Filters>
+		</Appender>
+
+		<Appender type="File" name="File_WARN" fileName="${file_warn}">
+			<Layout type="PatternLayout" pattern="[%-5level] %d %p %C{9.} [%t] %m%n" />
+			<Filters>
+				<ThresholdFilter level="error" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="fatal" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="warn" onMatch="ACCEPT"
+					onMismatch="DENY" />
+			</Filters>
+		</Appender>
+
+		<Appender type="File" name="File_ERROR" fileName="${file_error}">
+			<Layout type="PatternLayout" pattern="[%-5level] %d %p %C{9.} [%t] %m%n" />
+			<Filters>
+				<ThresholdFilter level="fatal" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="error" onMatch="ACCEPT"
+					onMismatch="DENY" />
+			</Filters>
+		</Appender>
+
+		<Appender type="File" name="File_FATAL" fileName="${file_fatal}">
+			<Layout type="PatternLayout" pattern="[%-5level] %d %p %C{9.} [%t] %m%n" />
+			<Filters>
+				<ThresholdFilter level="fatal" onMatch="ACCEPT"
+					onMismatch="DENY" />
+			</Filters>
+		</Appender>
+
+		<Appender type="Console" name="Console">
+			<Layout type="PatternLayout"
+				pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %p [%t] %m%n" />
+			<Filters>
+				<ThresholdFilter level="all" onMatch="ACCEPT"
+					onMismatch="DENY" />
+			</Filters>
+		</Appender>
+
+		<Appender type="Console" name="FLOW">
+			<Layout type="PatternLayout" pattern="%C{9}.%M %m %ex%n" />
+		</Appender>
+
+	</Appenders>
+
+	<Loggers>
+		<Root level="all">
+			<AppenderRef ref="File_DEBUG" />
+			<AppenderRef ref="File_INFO" />
+			<AppenderRef ref="File_WARN" />
+			<AppenderRef ref="File_ERROR" />
+			<AppenderRef ref="File_FATAL" />
+			<AppenderRef ref="Console" />
+			<!-- Use FLOW to trace down exact method sending the msg -->
+			<!-- <AppenderRef ref="FLOW" /> -->
+		</Root>
+	</Loggers>
+
+</Configuration>
